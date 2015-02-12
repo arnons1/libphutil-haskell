@@ -1,26 +1,26 @@
 <?php
 
 /**
- * Extends Differential with a 'Trac Issues' field for GHC.
+ * Extends Differential with a 'Trac Issues' field for SQream.
  */
-final class DifferentialGhcTracField
+final class DifferentialSqreamTracField
   extends DifferentialStoredCustomField {
 
   private $error;
 
   /* -- Core custom field descriptions -------------------------------------- */
   public function getFieldKey() {
-    return 'differential:ghc-trac';
+    return 'differential:sqream-trac';
   }
 
   public function getFieldName() {
     // Rendered in 'Config > Differential > differential.fields'
-    return pht('GHC Trac Issues');
+    return pht('SQream Trac Issues');
   }
 
   public function getFieldDescription() {
     // Rendered in 'Config > Differential > differential.fields'
-    return pht('Lists associated GHC Trac issues.');
+    return pht('Lists associated SQream Trac issues.');
   }
 
   /* -- Field properties ---------------------------------------------------- */
@@ -30,7 +30,7 @@ final class DifferentialGhcTracField
   }
 
   public function shouldAppearInPropertyView() {
-    return true; // NOTE: Only appears for 'rGHC', see below.
+    return true; // NOTE: Only appears for 'rS', see below.
   }
 
   public function shouldAppearInEditView() {
@@ -59,9 +59,9 @@ final class DifferentialGhcTracField
       'Trac',
       'Trac Issue',
       'Trac Issues',
-      'GHC Trac',
-      'GHC Trac Issue',
-      'GHC Trac Issues',
+      'SQream Trac',
+      'SQream Trac Issue',
+      'SQream Trac Issues',
     );
   }
 
@@ -71,7 +71,7 @@ final class DifferentialGhcTracField
 
   // Rendered when you run 'arc diff'
   public function renderCommitMessageLabel() {
-    return 'GHC Trac Issues';
+    return 'SQream Trac Issues';
   }
 
   // Rendered in the UI when viewing a revision
@@ -144,7 +144,7 @@ final class DifferentialGhcTracField
           $errors[] = new PhabricatorApplicationTransactionValidationError(
             $type,
             pht('Invalid issue reference'),
-            pht('References to GHC Trac tickets may only take the form '.
+            pht('References to SQream Trac tickets may only take the form '.
                 '`#XYZ` where `XYZ` refers to an issue number, but you '.
                 'specified "%s".', $id),
             $xaction);
@@ -188,7 +188,7 @@ final class DifferentialGhcTracField
     foreach ($value as $id) {
       if (!preg_match('/#(\d+)/', $id)) {
         throw new DifferentialFieldValidationException(
-          pht('References to GHC Trac issues may only take the form '.
+          pht('References to SQream Trac issues may only take the form '.
               '`#XYZ` where `XYZ` refers to an issue number.'));
       }
     }
@@ -202,7 +202,7 @@ final class DifferentialGhcTracField
   /* -- Rendering ----------------------------------------------------------- */
   public function renderEditControl(array $handles) {
     return id(new AphrontFormTextControl())
-      ->setLabel(pht('GHC Trac Issues'))
+      ->setLabel(pht('SQream Trac Issues'))
       ->setCaption(
         pht('Example: %s', phutil_tag('tt', array(), '#7602, #2345')))
       ->setName($this->getFieldKey())
@@ -222,8 +222,8 @@ final class DifferentialGhcTracField
     $links = array();
     $match = null;
 
-    // Don't show for non-GHC repositories.
-    if (!$this->isGhcRepository()) {
+    // Don't show for non-SQream repositories.
+    if (!$this->isSqreamRepository()) {
       return null;
     }
 
@@ -250,7 +250,7 @@ final class DifferentialGhcTracField
   }
 
   /* -- Private APIs -------------------------------------------------------- */
-  private function isGhcRepository() {
+  private function isSqreamRepository() {
     $repo = $this->getObject()->getRepository();
     if ($repo === null) {
       return false;
