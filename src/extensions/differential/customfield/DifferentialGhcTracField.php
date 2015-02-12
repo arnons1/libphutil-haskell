@@ -234,7 +234,7 @@ final class DifferentialGhcTracField
       else {
         $num = $match[1];
         $links[] = phutil_tag('a', array(
-          'href' => 'https://ghc.haskell.org/trac/ghc/ticket/'.$num,
+          'href' => 'http://192.168.0.61:8080/ticket/'.$num,
         ), $ref);
       }
     }
@@ -256,7 +256,7 @@ final class DifferentialGhcTracField
       return false;
     }
 
-    return ($repo->getMonogram() === 'rGHC');
+    return ($repo->getMonogram() === 'rS');
   }
 }
 

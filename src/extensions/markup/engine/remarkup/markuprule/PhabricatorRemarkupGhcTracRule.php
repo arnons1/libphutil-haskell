@@ -23,7 +23,7 @@ final class PhabricatorRemarkupGhcTracRule
 
   public function markupInlineTracLink(array $matches) {
 
-    $uri = 'https://ghc.haskell.org/trac/ghc/ticket/'.$matches[1];
+    $uri = 'http://192.168.0.61:8080/ticket/'.$matches[1];
     $ref = 'Trac #'.$matches[1];
 
     $link = phutil_tag('a', array(
